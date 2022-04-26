@@ -1,6 +1,6 @@
 #include "Hall.h"
 
-// Конструктор по подразбиране 
+// РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РїРѕ РїРѕРґСЂР°Р·Р±РёСЂР°РЅРµ 
 
 Hall::Hall()
 {
@@ -12,7 +12,7 @@ Hall::Hall()
 	freeSeats = 0;
 }
 
-// Конструктор с параметри
+// РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ СЃ РїР°СЂР°РјРµС‚СЂРё
 
 Hall::Hall(int num, int rows, int seats)
 {
@@ -24,7 +24,7 @@ Hall::Hall(int num, int rows, int seats)
 	freeSeats = allSeats;
 }
 
-// Мутатори
+// РњСѓС‚Р°С‚РѕСЂРё
 
 void Hall::setNumber(int num)
 {
@@ -62,7 +62,7 @@ void Hall::setSeats(int seats)
 	}
 }
 
-// Селектори
+// РЎРµР»РµРєС‚РѕСЂРё
 
 int Hall::getNumber() const
 {
@@ -89,11 +89,9 @@ int Hall::getFreeSeats() const
 	return freeSeats;
 }
 
-// Функция за извеждане
+// Р¤СѓРЅРєС†РёСЏ Р·Р° РёР·РІРµР¶РґР°РЅРµ
 
 void Hall::printHall() const
 {
 	std::cout << "Number: " << number << ", Rows: " << rows << ", Seats: " << seats << std::endl;
 }
-
-
