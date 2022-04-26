@@ -35,6 +35,5 @@ public:
 
 // Оператор за сравнение на дати
 bool operator==(const Date&, const Date&);
-{
-	return (date1.getDay() == date2.getDay() && date1.getMonth() == date2.getMonth() && date1.getYear() == date2.getYear());
-}
+
+#endif
