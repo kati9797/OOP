@@ -1,7 +1,7 @@
 #include "Date.h"
 #include <iostream>
 
-// Конструктор по подразбиране
+// РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РїРѕ РїРѕРґСЂР°Р·Р±РёСЂР°РЅРµ
 
 Date::Date()
 {
@@ -10,7 +10,7 @@ Date::Date()
 	year = 1;
 }
 
-// Конструктор с параметри
+// РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ СЃ РїР°СЂР°РјРµС‚СЂРё
 
 Date::Date(int newDay, int newMonth, int newYear)
 {
@@ -19,7 +19,7 @@ Date::Date(int newDay, int newMonth, int newYear)
 	setYear(newYear);
 }
 
-// Мутатори
+//  РњСѓС‚Р°С‚РѕСЂРё
 
 void Date::setDay(int newDay)
 {
@@ -60,7 +60,7 @@ void Date::setYear(int newYear)
 	}
 }
 
-// Селектори
+// РЎРµР»РµРєС‚РѕСЂРё
 
 int Date::getDay() const
 {
@@ -77,14 +77,14 @@ int Date::getYear() const
 	return year;
 }
 
-// Функция за извеждане 
+// Р¤СѓРЅРєС†РёСЏ Р·Р° РёР·РІРµР¶РґР°РЅРµ
 
 void Date::printDate() const
 {
 	std::cout << "Day: " << day << ", Month: " << month << ", Year: " << year << std::endl;
 }
 
-// Оператор "==" за сравнение на дати
+// РћРїРµСЂР°С‚РѕСЂ "==" Р·Р° СЃСЂР°РІРЅРµРЅРёРµ РЅР° РґР°С‚Рё
 
 bool operator==(const Date& date1, const Date& date2)
 {
