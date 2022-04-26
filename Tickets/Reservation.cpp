@@ -1,6 +1,7 @@
 #include "Reservation.h"
 
-// Копираща функция
+// РљРѕРїРёСЂР°С‰Р° С„СѓРЅРєС†РёСЏ
+
 void Reservation::copyFrom(const Reservation& other)
 {
 	hall = other.hall;
@@ -12,13 +13,15 @@ void Reservation::copyFrom(const Reservation& other)
 	strcpy(note, other.note);
 }
 
-// Освобождаване на динамично заделената памет
+// РћСЃРІРѕР±РѕР¶РґР°РІР°РЅРµ РЅР° РґРёРЅР°РјРёС‡РЅРѕ Р·Р°РґРµР»РµРЅР°С‚Р° РїР°РјРµС‚
+
 void Reservation::free()
 {
 	delete[] password;
 }
 
-// Конструктор по подразбиране
+// РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РїРѕ РїРѕРґСЂР°Р·Р±РёСЂР°РЅРµ
+
 Reservation::Reservation()
 {
 	hall = Hall();
@@ -29,7 +32,8 @@ Reservation::Reservation()
 	strcpy(note, "\0");
 }
 
-// Конструктор с параметри
+// РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ СЃ РїР°СЂР°РјРµС‚СЂРё
+
 Reservation::Reservation(int newRow, int newSeat, const char* pass)
 {
 	hall = Hall();
@@ -38,13 +42,15 @@ Reservation::Reservation(int newRow, int newSeat, const char* pass)
 	setPass(pass);
 }
 
-//Копиращ конструктор
+//РљРѕРїРёСЂР°С‰ РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ
+
 Reservation::Reservation(const Reservation& other)
 {
 	copyFrom(other);
 }
 
-//Оператор "="
+//РћРїРµСЂР°С‚РѕСЂ "="
+
 Reservation& Reservation::operator=(const Reservation& other)
 {
 	if (this != &other)
@@ -55,13 +61,15 @@ Reservation& Reservation::operator=(const Reservation& other)
 	return *this;
 }
 
-// Деструктор
+// Р”РµСЃС‚СЂСѓРєС‚РѕСЂ
+
 Reservation::~Reservation()
 {
 	free();
 }
 
-// Мутатори
+// РњСѓС‚Р°С‚РѕСЂРё
+
 void Reservation::setPass(const char* pass)
 {
 	if (password != nullptr)
@@ -83,7 +91,8 @@ void Reservation::setHall(const Hall& newHall)
 	hall = newHall;
 }
 
-// Селектори
+// РЎРµР»РµРєС‚РѕСЂРё
+
 char* Reservation::getPass() const
 {
 	return password;
@@ -104,7 +113,8 @@ Hall Reservation::getHall() const
 	return hall;
 }
 
-// Функция за извеждане на резервация
+// Р¤СѓРЅРєС†РёСЏ Р·Р° РёР·РІРµР¶РґР°РЅРµ РЅР° СЂРµР·РµСЂРІР°С†РёСЏ
+
 void Reservation::printReservation() const
 {
 	std::cout << row << " " << seat << " " << password << " " << note;
