@@ -1,6 +1,7 @@
-#include "Event.h"
+##include "Event.h"
 
-// Копираща функция 
+// РљРѕРїРёСЂР°С‰Р° С„СѓРЅРєС†РёСЏ 
+
 void Event::copyFrom(const Event& other)
 {
 	date = other.date;
@@ -18,14 +19,16 @@ void Event::copyFrom(const Event& other)
 	}
 }
 
-// Освобождаване на динамично заделената памет
+// РћСЃРІРѕР±РѕР¶РґР°РІР°РЅРµ РЅР° РґРёРЅР°РјРёС‡РЅРѕ Р·Р°РґРµР»РµРЅР°С‚Р° РїР°РјРµС‚
+
 void Event::free()
 {
 	delete[] name;
 	delete[] reservedSeats;
 }
 
-// Увелечаване на капацитета и копиране на старата информация в новия масив
+// РЈРІРµР»РµС‡Р°РІР°РЅРµ РЅР° РєР°РїР°С†РёС‚РµС‚Р° Рё РєРѕРїРёСЂР°РЅРµ РЅР° СЃС‚Р°СЂР°С‚Р° РёРЅС„РѕСЂРјР°С†РёСЏ РІ РЅРѕРІРёСЏ РјР°СЃРёРІ
+
 void Event::resize()
 {
 	capacity *= 2;
@@ -38,7 +41,8 @@ void Event::resize()
 	reservedSeats = resizedArr;
 }
 
-// Размяна на елементи
+// Р Р°Р·РјСЏРЅР° РЅР° РµР»РµРјРµРЅС‚Рё
+
 void Event::swap(int& x, int& y)
 {
 	int temp = x;
@@ -46,7 +50,8 @@ void Event::swap(int& x, int& y)
 	y = temp;
 }
 
-// Сортиране на резервираните места
+// РЎРѕСЂС‚РёСЂР°РЅРµ РЅР° СЂРµР·РµСЂРІРёСЂР°РЅРёС‚Рµ РјРµСЃС‚Р°
+
 void Event::selectionSort()
 {
 	int minInd;
@@ -63,9 +68,10 @@ void Event::selectionSort()
 }
 
 // Binary Search 
-// По подадено място проверява дали то е било резервирано до момента 
-// Ако вече е резервирано -> връща индекса, на който се намира в масива
-// Ако все още не е резервирано -> връща -1 
+// РџРѕ РїРѕРґР°РґРµРЅРѕ РјСЏСЃС‚Рѕ РїСЂРѕРІРµСЂСЏРІР° РґР°Р»Рё С‚Рѕ Рµ Р±РёР»Рѕ СЂРµР·РµСЂРІРёСЂР°РЅРѕ РґРѕ РјРѕРјРµРЅС‚Р° 
+// РђРєРѕ РІРµС‡Рµ Рµ СЂРµР·РµСЂРІРёСЂР°РЅРѕ -> РІСЂСЉС‰Р° РёРЅРґРµРєСЃР°, РЅР° РєРѕР№С‚Рѕ СЃРµ РЅР°РјРёСЂР° РІ РјР°СЃРёРІР°
+// РђРєРѕ РІСЃРµ РѕС‰Рµ РЅРµ Рµ СЂРµР·РµСЂРІРёСЂР°РЅРѕ -> РІСЂСЉС‰Р° -1 
+
 int Event::findReservation(int seat)
 {
 	int startInd = 0;
@@ -90,7 +96,8 @@ int Event::findReservation(int seat)
 	return -1;
 }
 
-// Конструктор по подразбиране
+// РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РїРѕ РїРѕРґСЂР°Р·Р±РёСЂР°РЅРµ
+
 Event::Event()
 {
 	date = Date();
@@ -105,7 +112,8 @@ Event::Event()
 	reservedSeats = new int[capacity];
 }
 
-// Конструктор с параметри
+// РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ СЃ РїР°СЂР°РјРµС‚СЂРё
+
 Event::Event(Date newDate, const char* newName, Hall newHall)
 {
 	date = newDate;
@@ -117,13 +125,15 @@ Event::Event(Date newDate, const char* newName, Hall newHall)
 	reservedSeats = new int[capacity];
 }
 
-// Копиращ конструктор
+// РљРѕРїРёСЂР°С‰ РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ
+
 Event::Event(const Event& other)
 {
 	copyFrom(other);
 }
 
-// Оператор "="
+// РћРїРµСЂР°С‚РѕСЂ "="
+
 Event& Event::operator=(const Event& other)
 {
 	if (this != &other)
@@ -134,13 +144,15 @@ Event& Event::operator=(const Event& other)
 	return *this;
 }
 
-// Деструктор
+// Р”РµСЃС‚СЂСѓРєС‚РѕСЂ
+
 Event::~Event()
 {
 	free();
 }
 
-// Мутатор за име
+// РњСѓС‚Р°С‚РѕСЂ Р·Р° РёРјРµ
+
 void Event::setName(const char* newName)
 {
 	free();
@@ -149,7 +161,8 @@ void Event::setName(const char* newName)
 	strcpy(name, newName);
 }
 
-// Селектори
+// РЎРµР»РµРєС‚РѕСЂРё
+
 Date Event::getDate() const
 {
 	return date;
@@ -165,7 +178,8 @@ Hall Event::getHall() const
 	return hall;
 }
 
-// Функция за извеждане на представление
+// Р¤СѓРЅРєС†РёСЏ Р·Р° РёР·РІРµР¶РґР°РЅРµ РЅР° РїСЂРµРґСЃС‚Р°РІР»РµРЅРёРµ
+
 void Event::printEvent() const
 {
 	date.printDate();
@@ -173,20 +187,22 @@ void Event::printEvent() const
 	hall.printHall();
 }
 
-// Добавяне на резервирано място
+// Р”РѕР±Р°РІСЏРЅРµ РЅР° СЂРµР·РµСЂРІРёСЂР°РЅРѕ РјСЏСЃС‚Рѕ
+
 void Event::addReservation(const Reservation& reservation)
 {
 	if (reservedSize == capacity)
 	{
 		resize();
 	}
-	int seat = ((reservation.getRow() - 1) * reservation.getHall().getSeats()) + reservation.getSeat(); //изчисляване на номера на мястото 
+	int seat = ((reservation.getRow() - 1) * reservation.getHall().getSeats()) + reservation.getSeat(); //РёР·С‡РёСЃР»СЏРІР°РЅРµ РЅР° РЅРѕРјРµСЂР° РЅР° РјСЏСЃС‚РѕС‚Рѕ 
 	reservedSeats[reservedSize++] = seat;
 }
 
-// Премахване на резервирано място 
-// Създаваме нов масив със същия капацитет и с дължина един елемент по-малко от стария масив
-// При копирането на старата информажия в новия масив прескачаме индекса, на който се е намирало мястото, което трябва да премахнем
+// РџСЂРµРјР°С…РІР°РЅРµ РЅР° СЂРµР·РµСЂРІРёСЂР°РЅРѕ РјСЏСЃС‚Рѕ 
+// РЎСЉР·РґР°РІР°РјРµ РЅРѕРІ РјР°СЃРёРІ СЃСЉСЃ СЃСЉС‰РёСЏ РєР°РїР°С†РёС‚РµС‚ Рё СЃ РґСЉР»Р¶РёРЅР° РµРґРёРЅ РµР»РµРјРµРЅС‚ РїРѕ-РјР°Р»РєРѕ РѕС‚ СЃС‚Р°СЂРёСЏ РјР°СЃРёРІ
+// РџСЂРё РєРѕРїРёСЂР°РЅРµС‚Рѕ РЅР° СЃС‚Р°СЂР°С‚Р° РёРЅС„РѕСЂРјР°Р¶РёСЏ РІ РЅРѕРІРёСЏ РјР°СЃРёРІ РїСЂРµСЃРєР°С‡Р°РјРµ РёРЅРґРµРєСЃР°, РЅР° РєРѕР№С‚Рѕ СЃРµ Рµ РЅР°РјРёСЂР°Р»Рѕ РјСЏСЃС‚РѕС‚Рѕ, РєРѕРµС‚Рѕ С‚СЂСЏР±РІР° РґР° РїСЂРµРјР°С…РЅРµРј
+
 void Event::removeReservation(const Reservation& res)
 {
 	selectionSort();
@@ -210,7 +226,8 @@ void Event::removeReservation(const Reservation& res)
 	}
 }
 
-// Функция за извеждане на масива от резервирани места за представлението
+// Р¤СѓРЅРєС†РёСЏ Р·Р° РёР·РІРµР¶РґР°РЅРµ РЅР° РјР°СЃРёРІР° РѕС‚ СЂРµР·РµСЂРІРёСЂР°РЅРё РјРµСЃС‚Р° Р·Р° РїСЂРµРґСЃС‚Р°РІР»РµРЅРёРµС‚Рѕ
+
 void Event::printReservedSeats() const
 {
 	for (int i = 0; i < reservedSize; i++)
