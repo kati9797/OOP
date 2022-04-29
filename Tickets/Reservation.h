@@ -2,6 +2,7 @@
 #define RESERVATION_H
 #include <iostream>
 #include "Hall.h"
+#include "MyString.h"
 #pragma warning ( disable : 4996 )
 
 // Клас Резервация
@@ -15,38 +16,30 @@ private:
 	int row;
 	// Място от указания ред за резервация
 	int seat;
-	// Парола за резервация ( с произволна дължина )
-	char* password;
+	// Парола за резервация 
+	MyString password;
 	// Дължина на паролата
 	int sizePass;
 	// Бележка към резервацията 
 	char note[1024];
 
-	// Копираща функция от друга резервация
-	void copyFrom(const Reservation&);
-	// Освобождаване на динамично заделената памет
-	void free();
-
 public:
 
 	// Конструктори
 	Reservation();
-	Reservation(int, int, const char*);
-	Reservation(const Reservation&);
-	// Оператор за присвояване
-	Reservation& operator=(const Reservation&);
-	// Деструктор
-	~Reservation();
+	Reservation(int, int, MyString);
 
 	// Мутатори
-	void setPass(const char*);
+	void setPass(const MyString&);
 	void setNote(char*);
 	void setHall(const Hall&);
+
 	// Селектори
-	char* getPass() const;
+	MyString getPass() const;
 	int getRow() const;
 	int getSeat() const;
 	Hall getHall() const;
+
 	// Функция за извеждане на резервация
 	void printReservation() const;
 };
