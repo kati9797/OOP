@@ -2,8 +2,8 @@
 #ifndef MYSTRING_HEADER
 #define MYSTRING_HEADER
 
-// Êëàñ Ñòðèíã
-// Ïðåäâàðèòåëíî èìïëåìåíòèðàí çà çàäà÷àòà Word Collection
+// ÐšÐ»Ð°Ñ Ð¡Ñ‚Ñ€Ð¸Ð½Ð³
+// ÐŸÑ€ÐµÐ´Ð²Ð°Ñ€Ð¸Ñ‚ÐµÐ»Ð½Ð¾ Ð¸Ð¼Ð¿Ð»ÐµÐ¼ÐµÐ½Ñ‚Ð¸Ñ€Ð°Ð½ Ð·Ð° Ð·Ð°Ð´Ð°Ñ‡Ð°Ñ‚Ð° Word Collection
 
 class MyString
 {
@@ -12,31 +12,31 @@ private:
 	char* string;
 	int size;
 
-	// Êîïèðàùà ôóíêöèÿ
+	// ÐšÐ¾Ð¿Ð¸Ñ€Ð°Ñ‰Ð° Ñ„ÑƒÐ½ÐºÑ†Ð¸Ñ
 	void copyFrom(const MyString&);
-	// Îñâîáîæäàâàíå íà äèíàìè÷íî çàäåëåíàòà ïàìåò
+	// ÐžÑÐ²Ð¾Ð±Ð¾Ð¶Ð´Ð°Ð²Ð°Ð½Ðµ Ð½Ð° Ð´Ð¸Ð½Ð°Ð¼Ð¸Ñ‡Ð½Ð¾ Ð·Ð°Ð´ÐµÐ»ÐµÐ½Ð°Ñ‚Ð° Ð¿Ð°Ð¼ÐµÑ‚
 	void free();
 
 public:
 
-	// Êîíñòðóêòîðè
+	// ÐšÐ¾Ð½ÑÑ‚Ñ€ÑƒÐºÑ‚Ð¾Ñ€Ð¸
 	MyString();
 	MyString(const char*);
 	MyString(const MyString&);
-	// Îïåðàòîð çà ïðèñâîÿâàíå
+	// ÐžÐ¿ÐµÑ€Ð°Ñ‚Ð¾Ñ€ Ð·Ð° Ð¿Ñ€Ð¸ÑÐ²Ð¾ÑÐ²Ð°Ð½Ðµ
 	MyString& operator=(const MyString&);
-	// Äåñòðóêòîð
+	// Ð”ÐµÑÑ‚Ñ€ÑƒÐºÑ‚Ð¾Ñ€
 	~MyString();
 
-	// Ñåëåêòîðè
+	// Ð¡ÐµÐ»ÐµÐºÑ‚Ð¾Ñ€Ð¸
 	int getSize();
 	char* getString() const;
 
-	// Êîíêàòåíèðàùà ôóíêöèÿ
+	// ÐšÐ¾Ð½ÐºÐ°Ñ‚ÐµÐ½Ð¸Ñ€Ð°Ñ‰Ð° Ñ„ÑƒÐ½ÐºÑ†Ð¸Ñ
 	void concat(const MyString&);
 };
 
-// Îïåðàòîðè çà ñðàâíåíèå
+// ÐžÐ¿ÐµÑ€Ð°Ñ‚Ð¾Ñ€Ð¸ Ð·Ð° ÑÑ€Ð°Ð²Ð½ÐµÐ½Ð¸Ðµ
 bool operator >(const MyString&, const MyString&);
 bool operator <(const MyString&, const MyString&);
 bool operator ==(const MyString&, const MyString&);
