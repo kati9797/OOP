@@ -20,6 +20,16 @@ Reservation::Reservation(int newRow, int newSeat, const MyString pass)
 	setPass(pass);
 }
 
+// Конструктор с два параметъра ( ред и място )
+
+Reservation::Reservation(int newRow, int newSeat)
+{
+	hall = Hall();
+	row = newRow;
+	seat = newSeat;
+	password = MyString();
+}
+
 // Мутатори
 
 void Reservation::setPass(const MyString& pass)
