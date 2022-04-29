@@ -112,7 +112,7 @@ void TimeTable::addEvent(const Event& ev)
 		if ((list[i].getDate() == ev.getDate()) && (list[i].getHall().getNumber() == ev.getHall().getNumber()))
 		{
 			foundSameDate = true;
-			std::cout << "Error!"<<std::endl;
+			std::cout << "Error!" << std::endl;
 		}
 	}
 
@@ -133,7 +133,7 @@ int TimeTable::freeSeats(const Date& date, const char* name)
 {
 	for (int i = 0; i < size; i++)
 	{
-		if (list[i].getDate() == date && strcmp(list[i].getName(),name) == 0)
+		if (list[i].getDate() == date && strcmp(list[i].getName(), name) == 0)
 		{
 			return list[i].getHall().getFreeSeats();
 		}
@@ -153,6 +153,7 @@ void TimeTable::saveTicket(const Date& date, const char* name, Reservation& res)
 			res.setHall(list[i].getHall());
 			list[i].addReservation(res);
 		}
+		list[i].printReservedSeats();
 	}
 }
 
@@ -167,5 +168,27 @@ void TimeTable::removeSavedTicket(const Date& date, const char* name, Reservatio
 		{
 			list[i].removeReservation(res);
 		}
+		list[i].printReservedSeats();
+	}
+}
+
+// Закупуване на билет за представление
+
+void TimeTable::buyTicket(const Date& date, const char* name, Reservation& res)
+{
+	bool foundEvent = false;
+	for (int i = 0; i < size; i++)
+	{
+		if (list[i].getDate() == date && strcmp(list[i].getName(), name) == 0) // събитието е намерено
+		{
+			res.setHall(list[i].getHall());
+			list[i].addPurchase(res);
+			foundEvent = true;
+		}
+	}
+
+	if (!foundEvent)
+	{
+		std::cout << "This event was not found!" << std::endl;
 	}
 }
