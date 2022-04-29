@@ -1,7 +1,7 @@
 #include "MyString.h"
 #pragma warning(disable : 4996)
 
-// Êîïèðàùà ôóíêöèÿ
+// ÐšÐ¾Ð¿Ð¸Ñ€Ð°Ñ‰Ð° Ñ„ÑƒÐ½ÐºÑ†Ð¸Ñ
 
 void MyString::copyFrom(const MyString& other)
 {
@@ -11,14 +11,14 @@ void MyString::copyFrom(const MyString& other)
 	size = other.size;
 }
 
-// Îñâîáîæäàâàíå íà äèíàìè÷íî çàäåëåíàòà ïàìåò
+// ÐžÑÐ²Ð¾Ð±Ð¾Ð¶Ð´Ð°Ð²Ð°Ð½Ðµ Ð½Ð° Ð´Ð¸Ð½Ð°Ð¼Ð¸Ñ‡Ð½Ð¾ Ð·Ð°Ð´ÐµÐ»ÐµÐ½Ð°Ñ‚Ð° Ð¿Ð°Ð¼ÐµÑ‚
 
 void MyString::free()
 {
 	delete[] string;
 }
 
-// Êîíñòðóêòîð ïî ïîäðàçáèðàíå
+// ÐšÐ¾Ð½ÑÑ‚Ñ€ÑƒÐºÑ‚Ð¾Ñ€ Ð¿Ð¾ Ð¿Ð¾Ð´Ñ€Ð°Ð·Ð±Ð¸Ñ€Ð°Ð½Ðµ
 
 MyString::MyString()
 {
@@ -27,7 +27,7 @@ MyString::MyString()
 	size = 0;
 }
 
-// Êîíñòðóêòîð ñ ïàðàìåòúð
+// ÐšÐ¾Ð½ÑÑ‚Ñ€ÑƒÐºÑ‚Ð¾Ñ€ Ñ Ð¿Ð°Ñ€Ð°Ð¼ÐµÑ‚ÑŠÑ€
 
 MyString::MyString(const char* str)
 {
@@ -37,14 +37,14 @@ MyString::MyString(const char* str)
 	size = strlen(str);
 }
 
-// Êîïèðàù êîíñòðóêòîð
+// ÐšÐ¾Ð¿Ð¸Ñ€Ð°Ñ‰ ÐºÐ¾Ð½ÑÑ‚Ñ€ÑƒÐºÑ‚Ð¾Ñ€
 
 MyString::MyString(const MyString& other)
 {
 	copyFrom(other);
 }
 
-// Îïåðàòîð "="
+// ÐžÐ¿ÐµÑ€Ð°Ñ‚Ð¾Ñ€ "="
 
 MyString& MyString::operator=(const MyString& str)
 {
@@ -56,14 +56,14 @@ MyString& MyString::operator=(const MyString& str)
 	return *this;
 }
 
-// Äåñòðóêòîð
+// Ð”ÐµÑÑ‚Ñ€ÑƒÐºÑ‚Ð¾Ñ€
 
 MyString::~MyString()
 {
 	free();
 }
 
-// Ñåëåêòîðè
+// Ð¡ÐµÐ»ÐµÐºÑ‚Ð¾Ñ€Ð¸
 
 int MyString::getSize()
 {
@@ -75,7 +75,7 @@ char* MyString::getString() const
 	return string;
 }
 
-// Êîíêàòåíèðàùà ôóíêöèÿ
+// ÐšÐ¾Ð½ÐºÐ°Ñ‚ÐµÐ½Ð¸Ñ€Ð°Ñ‰Ð° Ñ„ÑƒÐ½ÐºÑ†Ð¸Ñ
 
 void MyString::concat(const MyString& other)
 {
@@ -87,7 +87,7 @@ void MyString::concat(const MyString& other)
 	size = size + other.size;
 }
 
-// Îïåðàòîðè çà ñðàâíåíèå
+// ÐžÐ¿ÐµÑ€Ð°Ñ‚Ð¾Ñ€Ð¸ Ð·Ð° ÑÑ€Ð°Ð²Ð½ÐµÐ½Ð¸Ðµ
 
 bool operator>(const MyString& str1, const MyString& str2)
 {
