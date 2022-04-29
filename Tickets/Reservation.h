@@ -28,6 +28,7 @@ public:
 	// Конструктори
 	Reservation();
 	Reservation(int, int, MyString);
+	Reservation(int, int);
 
 	// Мутатори
 	void setPass(const MyString&);
