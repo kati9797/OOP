@@ -19,6 +19,14 @@ void Event::copyFrom(const Event& other)
 		reservedSeats[i] = other.reservedSeats[i];
 		reservedPass[i] = other.reservedPass[i];
 	}
+	
+	purchasedSize = other.purchasedSize;
+	purchasedCapacity = other.purchasedCapacity;
+	purchasedSeats = new int[purchasedCapacity];
+	for (int i = 0; i < purchasedSize; i++)
+	{
+		purchasedSeats[i] = other.purchasedSeats[i];
+	}
 }
 
 // Освобождаване на динамично заделената памет
@@ -28,9 +36,10 @@ void Event::free()
 	delete[] name;
 	delete[] reservedSeats;
 	delete[] reservedPass;
+	delete[] purchasedSeats;
 }
 
-// Увелечаване на капацитета и копиране на старата информация в новия масив
+// Увелечаване на капацитета и копиране на старата информация в новия масив ( резервирани места )
 
 void Event::resize()
 {
@@ -84,9 +93,7 @@ void Event::selectionSort()
 			swap(reservedSeats[minInd], reservedSeats[i]);
 			swapPass(reservedPass[minInd], reservedPass[i]);
 		}
-		
 	}
-
 }
 
 // Binary Search 
@@ -118,6 +125,66 @@ int Event::findReservation(int seat)
 	return -1;
 }
 
+// Увелечаване на капацитета и копиране на старата информация в новия масив ( продадени места )
+
+void Event::resizePurchased()
+{
+	purchasedCapacity *= 2;
+	int* resizedArr = new int[purchasedCapacity];
+	for (int i = 0; i < purchasedSize; i++)
+	{
+		resizedArr[i] = purchasedSeats[i];
+	} 
+	delete[] purchasedSeats;
+	
+	purchasedSeats = resizedArr;
+}
+
+// Сортиране на масива от продадени места
+
+void Event::selectionSortPurch()
+{
+	int minInd;
+	for (int i = 0; i < purchasedSize; i++)
+	{
+		minInd = i;
+		for (int j = i + 1; j < purchasedSize; j++)
+			if (purchasedSeats[j] < purchasedSeats[minInd])
+				minInd = j;
+
+		if (minInd != i)
+		{
+			swap(purchasedSeats[minInd], purchasedSeats[i]);
+		}
+	}
+}
+
+// Проверява дали дадено място вече е било продадено
+
+bool Event::binarySearchPurch(int seat)
+{
+	int startInd = 0;
+	int endInd = purchasedSize - 1;
+
+	while (startInd <= endInd)
+	{
+		int minInd = startInd + (endInd - startInd) / 2;
+		if (purchasedSeats[minInd] == seat)
+		{
+			return true;
+		}
+		else if (purchasedSeats[minInd] < seat)
+		{
+			startInd = minInd + 1;
+		}
+		else
+		{
+			endInd = minInd - 1;
+		}
+	}
+	return false;
+}
+
 // Конструктор по подразбиране
 
 Event::Event()
@@ -133,6 +200,10 @@ Event::Event()
 	capacity = 2;
 	reservedSeats = new int[capacity];
 	reservedPass = new MyString[capacity];
+
+	purchasedSize = 0;
+	purchasedCapacity = 2;
+	purchasedSeats = new int[purchasedCapacity];
 }
 
 // Конструктор с параметри
@@ -147,6 +218,10 @@ Event::Event(Date newDate, const char* newName, Hall newHall)
 	capacity = 2;
 	reservedSeats = new int[capacity];
 	reservedPass = new MyString[capacity];
+
+	purchasedSize = 0;
+	purchasedCapacity = 2;
+	purchasedSeats = new int[purchasedCapacity];
 }
 
 // Копиращ конструктор
@@ -255,6 +330,56 @@ void Event::removeReservation(const Reservation& res)
 		delete[] reservedPass;
 		reservedPass = passArr;
 		reservedSeats = newArr;
+	}
+}
+
+// Добавя ново продадено място към масива от продадени места
+
+void Event::pushInPurchasedArr(int seat)
+{
+	if (purchasedSize == purchasedCapacity)
+	{
+		resizePurchased();
+	}
+	purchasedSeats[purchasedSize++] = seat;
+}
+
+// Проверява дали продаждабата на дадено място може да се осъществи ( ако е възможно -> покупката се осъществява )
+void Event::addPurchase(Reservation& res)
+{
+	selectionSortPurch(); // сортираме масива от закупени места
+	int seat = ((res.getRow() - 1) * res.getHall().getSeats()) + res.getSeat(); // изчисляваме поредното място
+	bool isSold = binarySearchPurch(seat); // връща дали мястото е продадено
+
+	if (isSold == true)
+	{
+		std::cout << "This seat has been already sold!" << std::endl;
+	}
+	else
+	{
+		int indexOfSeat = findReservation(seat);
+		if (indexOfSeat != -1) // мястото е било резервирано
+		{
+			std::cout << "Enter password:" << std::endl;
+			char pass[128];
+			std::cin >> pass; // въвежда се парола
+			if (reservedPass[indexOfSeat]==pass) // паролата е вярна
+				{
+					// поставяме мястото в масива от купени места
+				    pushInPurchasedArr(seat);
+					std::cout << "Succesful purchase!" << std::endl;
+				}
+			else // грешна парола, мястото не се купува
+			{
+				std::cout << "Wrong password" << std::endl;
+			}
+		}
+		else
+		{
+			// мястото не е резервирано
+			pushInPurchasedArr(seat);
+			std::cout << "Succesful purchase!" << std::endl;
+		}
 	}
 }
 
