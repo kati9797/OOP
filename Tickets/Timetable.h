@@ -1,9 +1,6 @@
 #ifndef TIMETABLE_H
 #define TIMETABLE_H
-#include "Hall.h"
-#include "Date.h"
 #include "Event.h"
-#include "Reservation.h"
 
 // Клас Разписание
 class TimeTable
@@ -50,5 +47,7 @@ public:
 	void removeSavedTicket(const Date&, const char*, Reservation&);
 	// Закупуване на билет за представление
 	void buyTicket(const Date&, const char*, Reservation&);
+	// Справка за запазените, но неплатени места
+	void reportReservedTickets(const Date&, const char*);
 };
 #endif
