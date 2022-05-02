@@ -85,6 +85,10 @@ public:
 	void pushInPurchasedArr(int);
 	// Проверява дали продаждабата на дадено място може да се осъществи ( ако е възможно -> покупката се осъществява )
 	void addPurchase(Reservation&);
+	// Брой свободни места за събитие
+	int freeSeatsForEvent();
+	// Отпечатва резервираните места
+	void printReportReserved();
 	// Помощна функция, която извежда масива от резервирани места
 	void printReservedSeats() const;
 };
