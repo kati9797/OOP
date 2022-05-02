@@ -9,7 +9,6 @@ Hall::Hall()
 	seats = 0;
 
 	allSeats = 0;
-	freeSeats = 0;
 }
 
 // Конструктор с параметри
@@ -21,7 +20,6 @@ Hall::Hall(int num, int rows, int seats)
 	setSeats(seats);
 
 	allSeats = rows * seats;
-	freeSeats = allSeats;
 }
 
 // Мутатори
@@ -82,11 +80,6 @@ int Hall::getSeats() const
 int Hall::getAllSeats() const
 {
 	return allSeats;
-}
-
-int Hall::getFreeSeats() const
-{
-	return freeSeats;
 }
 
 // Функция за извеждане
