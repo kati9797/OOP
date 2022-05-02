@@ -131,11 +131,12 @@ void TimeTable::addEvent(const Event& ev)
 
 int TimeTable::freeSeats(const Date& date, const char* name)
 {
+
 	for (int i = 0; i < size; i++)
 	{
 		if (list[i].getDate() == date && strcmp(list[i].getName(), name) == 0)
 		{
-			return list[i].getHall().getFreeSeats();
+			return list[i].freeSeatsForEvent();
 		}
 	}
 	return 0;
@@ -153,7 +154,7 @@ void TimeTable::saveTicket(const Date& date, const char* name, Reservation& res)
 			res.setHall(list[i].getHall());
 			list[i].addReservation(res);
 		}
-		list[i].printReservedSeats();
+		//list[i].printReservedSeats();
 	}
 }
 
@@ -168,7 +169,7 @@ void TimeTable::removeSavedTicket(const Date& date, const char* name, Reservatio
 		{
 			list[i].removeReservation(res);
 		}
-		list[i].printReservedSeats();
+		//list[i].printReservedSeats();
 	}
 }
 
@@ -190,5 +191,53 @@ void TimeTable::buyTicket(const Date& date, const char* name, Reservation& res)
 	if (!foundEvent)
 	{
 		std::cout << "This event was not found!" << std::endl;
+	}
+}
+
+// Справка за запазените, но неплатени места
+
+void TimeTable::reportReservedTickets(const Date& date, const char* name)
+{
+	if (date.allDates()) // представления на всички дати
+	{
+		for (int i = 0; i < size; i++)
+		{
+			std::cout << "Reserved seats for event " << '"' << list[i].getName() << '"' << " on date:";
+			list[i].getDate().printDate();
+			list[i].printReportReserved();
+		}
+	}
+	else if ((!date.allDates()) && name == "ALL") // всички представления на конкретна дата
+	{
+		std::cout << "Event on date ";
+		date.printDate();
+		
+		for (int i = 0; i < size; i++)
+		{
+			if (list[i].getDate() == date)
+			{
+				std::cout << "Reserved seats for event " << '"'<< list[i].getName() << '"' << ":";
+				list[i].printReportReserved();
+			}
+		}
+	}
+	else // представление с конкретно име и дата 
+	{
+		bool foundEvent = false;
+		for (int i = 0; i < size; i++)
+		{
+			if (list[i].getDate() == date && strcmp(list[i].getName(), name) == 0)
+			{
+				foundEvent = true;
+				std::cout << "Reserved seats for event " << '"' << name << '"' << " on date:"; 
+				date.printDate();
+				list[i].printReportReserved();
+			}
+		}
+
+		if (!foundEvent)
+		{
+			std::cout << "The event was not found!" << std::endl;
+		}
 	}
 }
