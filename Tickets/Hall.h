@@ -16,8 +16,6 @@ private:
 	
 	// Допълнителна член-променлива за общия брой места в залата
 	int allSeats;
-	// Допълнителна член-променлива за свобободните места в залата
-	int freeSeats;
 
 public:
 
@@ -35,8 +33,9 @@ public:
 	int getRows() const;
 	int getSeats() const;
 	int getAllSeats() const;
-	int getFreeSeats() const;
 
 	// Функция за извеждане
 	void printHall() const;
 };
+
+#endif // !HALL_H
