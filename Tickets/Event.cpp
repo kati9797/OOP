@@ -345,6 +345,7 @@ void Event::pushInPurchasedArr(int seat)
 }
 
 // Проверява дали продаждабата на дадено място може да се осъществи ( ако е възможно -> покупката се осъществява )
+
 void Event::addPurchase(Reservation& res)
 {
 	selectionSortPurch(); // сортираме масива от закупени места
@@ -368,10 +369,11 @@ void Event::addPurchase(Reservation& res)
 					// поставяме мястото в масива от купени места
 				    pushInPurchasedArr(seat);
 					std::cout << "Succesful purchase!" << std::endl;
+					removeReservation(res);
 				}
 			else // грешна парола, мястото не се купува
 			{
-				std::cout << "Wrong password" << std::endl;
+				std::cout << "Wrong password!" << std::endl;
 			}
 		}
 		else
@@ -379,7 +381,33 @@ void Event::addPurchase(Reservation& res)
 			// мястото не е резервирано
 			pushInPurchasedArr(seat);
 			std::cout << "Succesful purchase!" << std::endl;
+			removeReservation(res);
 		}
+	}
+}
+
+// Брой свободни места за събитие
+
+int Event::freeSeatsForEvent()
+{
+	return getHall().getAllSeats() - reservedSize - purchasedSize;
+}
+
+// Отпечатва резервираните места 
+
+void Event::printReportReserved()
+{
+	if (reservedSize == 0)
+	{
+		std::cout << '-' << std::endl;
+	}
+	else
+	{
+		for (int i = 0; i < reservedSize; i++)
+		{
+			std::cout << reservedSeats[i] << " ";
+		}
+		std::cout << std::endl;
 	}
 }
 
