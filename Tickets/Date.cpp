@@ -1,6 +1,6 @@
 #include "Date.h"
 #include <iostream>
-
+#pragma warning (disable:4996)
 // Конструктор по подразбиране
 
 Date::Date()
@@ -8,6 +8,7 @@ Date::Date()
 	day = 1;
 	month = 1;
 	year = 1;
+	strcpy(date, "\0");
 }
 
 // Конструктор с параметри
@@ -17,9 +18,24 @@ Date::Date(int newDay, int newMonth, int newYear)
 	setMonth(newMonth);
 	setDay(newDay);
 	setYear(newYear);
+	strcpy(date, "\0");
 }
 
-//  Мутатори
+// Конструктор с параметър char*
+// Променяме допълнителната член-данна date само ако като параметър се подаде "ALL"
+
+Date::Date(const char* newDate)
+{
+	day = 1;
+	month = 1;
+	year = 1;
+	strcpy(date, "\0");
+
+	if (strcmp(newDate, "ALL") == 0)
+	strcpy(date, newDate);
+}
+
+// Мутатори
 
 void Date::setDay(int newDay)
 {
@@ -77,11 +93,25 @@ int Date::getYear() const
 	return year;
 }
 
-// Функция за извеждане
+// Функция, която проверява дали датата е зададена чрез "ALL"
+
+bool Date::allDates() const
+{
+	return (strcmp(date,"ALL") == 0);
+}
+
+// Функция за извеждане 
 
 void Date::printDate() const
 {
-	std::cout << "Day: " << day << ", Month: " << month << ", Year: " << year << std::endl;
+	if (!(strcmp(date, "ALL") == 0))
+	{
+		std::cout << day << "." << month << "." << year << std::endl;
+	}
+	else
+	{
+		std::cout << "ALL";
+	}
 }
 
 // Оператор "==" за сравнение на дати
