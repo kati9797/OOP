@@ -48,6 +48,6 @@ public:
 	// Закупуване на билет за представление
 	void buyTicket(const Date&, const char*, Reservation&);
 	// Справка за запазените, но неплатени места
-	void reportReservedTickets(const Date&, const char*);
+	void reportReservedTickets(const Date&, const char*, const char*);
 };
 #endif
