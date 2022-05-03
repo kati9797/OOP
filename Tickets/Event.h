@@ -4,6 +4,7 @@
 #include "Date.h"
 #include "Reservation.h"
 #pragma warning ( disable : 4996 )
+#include <fstream>
 
 // Клас Събитие
 class Event
@@ -87,8 +88,10 @@ public:
 	void addPurchase(Reservation&);
 	// Брой свободни места за събитие
 	int freeSeatsForEvent();
-	// Отпечатва резервираните места
-	void printReportReserved();
+	// Отпечатва резервираните места (файл)
+	void printReportReserved(std::ofstream&);
+	// Отпечатва резервирани места (конзола)
+	void printReportReservedConsole();
 	// Помощна функция, която извежда масива от резервирани места
 	void printReservedSeats() const;
 };
