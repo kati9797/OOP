@@ -196,28 +196,38 @@ void TimeTable::buyTicket(const Date& date, const char* name, Reservation& res)
 
 // Справка за запазените, но неплатени места
 
-void TimeTable::reportReservedTickets(const Date& date, const char* name)
+void TimeTable::reportReservedTickets(const Date& date, const char* name, const char* fileName)
 {
+	std::ofstream stream(fileName);
+	if (!stream.is_open())
+	{
+		std::cout << "Error!" << std::endl;
+	}
+
 	if (date.allDates()) // представления на всички дати
 	{
 		for (int i = 0; i < size; i++)
 		{
 			std::cout << "Reserved seats for event " << '"' << list[i].getName() << '"' << " on date:";
 			list[i].getDate().printDate();
-			list[i].printReportReserved();
+			stream<< "Reserved seats for event " << '"' << list[i].getName() << '"' << " on date:" << list[i].getDate().getDay() << '.' << list[i].getDate().getMonth() << '.' << list[i].getDate().getYear()<<std::endl; // file
+			list[i].printReportReservedConsole();
+			list[i].printReportReserved(stream); // file
 		}
 	}
 	else if ((!date.allDates()) && name == "ALL") // всички представления на конкретна дата
 	{
-		std::cout << "Event on date ";
+		std::cout<< "Events on date: ";
 		date.printDate();
-		
+		stream << "Events on date " << date.getDay() << '.' << date.getMonth() << '.' << date.getYear() << std::endl; // file
 		for (int i = 0; i < size; i++)
 		{
 			if (list[i].getDate() == date)
 			{
-				std::cout << "Reserved seats for event " << '"'<< list[i].getName() << '"' << ":";
-				list[i].printReportReserved();
+				std::cout << "Reserved seats for event " << '"'<< list[i].getName() << '"' << ":" << std::endl;
+				list[i].printReportReservedConsole();
+				stream << "Reserved seats for event " << '"' << list[i].getName() << '"' << ":" << std::endl; // file
+				list[i].printReportReserved(stream); // file
 			}
 		}
 	}
@@ -231,13 +241,18 @@ void TimeTable::reportReservedTickets(const Date& date, const char* name)
 				foundEvent = true;
 				std::cout << "Reserved seats for event " << '"' << name << '"' << " on date:"; 
 				date.printDate();
-				list[i].printReportReserved();
+				list[i].printReportReservedConsole();
+				stream<< "Reserved seats for event " << '"' << name << '"' << " on date : "<< list[i].getName() << '"' << " on date:" << list[i].getDate().getDay() << '.' << list[i].getDate().getMonth() << '.' << list[i].getDate().getYear() << std::endl; // file
+				list[i].printReportReserved(stream); // file
 			}
 		}
 
 		if (!foundEvent)
 		{
 			std::cout << "The event was not found!" << std::endl;
+			stream << "The event was not found!" << std::endl; // file
 		}
 	}
+
+	stream.close();
 }
