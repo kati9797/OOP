@@ -393,9 +393,27 @@ int Event::freeSeatsForEvent()
 	return getHall().getAllSeats() - reservedSize - purchasedSize;
 }
 
-// Отпечатва резервираните места 
+// Отпечатва резервираните места (файл)
 
-void Event::printReportReserved()
+void Event::printReportReserved(std::ofstream& stream)
+{
+	if (reservedSize == 0)
+	{
+		stream << '-' << std::endl;
+	}
+	else
+	{
+		for (int i = 0; i < reservedSize; i++)
+		{
+			stream << reservedSeats[i] << " ";
+		}
+		stream << std::endl;
+	}
+}
+
+// Отпечатва резервирани места (конзола)
+
+void Event::printReportReservedConsole()
 {
 	if (reservedSize == 0)
 	{
