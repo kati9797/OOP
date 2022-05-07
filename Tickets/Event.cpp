@@ -85,9 +85,13 @@ void Event::selectionSort()
 	{
 		minInd = i;
 		for (int j = i + 1; j < reservedSize; j++)
+		{
 			if (reservedSeats[j] < reservedSeats[minInd])
+			{
 				minInd = j;
-
+			}
+		}
+			
 		if (minInd != i) 
 		{
 			swap(reservedSeats[minInd], reservedSeats[i]);
@@ -149,9 +153,13 @@ void Event::selectionSortPurch()
 	{
 		minInd = i;
 		for (int j = i + 1; j < purchasedSize; j++)
+		{
 			if (purchasedSeats[j] < purchasedSeats[minInd])
+			{
 				minInd = j;
-
+			}		
+		}
+		
 		if (minInd != i)
 		{
 			swap(purchasedSeats[minInd], purchasedSeats[i]);
@@ -254,7 +262,11 @@ Event::~Event()
 
 void Event::setName(const char* newName)
 {
-	free();
+	if (name != nullptr)
+	{
+		delete[] name;
+	}
+
 	nameSize = strlen(newName);
 	name = new char[nameSize + 1];
 	strcpy(name, newName);
@@ -275,6 +287,11 @@ char* Event::getName() const
 Hall Event::getHall() const
 {
 	return hall;
+}
+
+int Event::getPurchasedSize() const
+{
+	return purchasedSize;
 }
 
 // Функция за извеждане на представление
@@ -328,8 +345,8 @@ void Event::removeReservation(const Reservation& res)
 		reservedSize = reservedSize - 1;
 		delete[] reservedSeats;
 		delete[] reservedPass;
-		reservedPass = passArr;
 		reservedSeats = newArr;
+		reservedPass = passArr;
 	}
 }
 
@@ -348,6 +365,7 @@ void Event::pushInPurchasedArr(int seat)
 
 void Event::addPurchase(Reservation& res)
 {
+	selectionSort();
 	selectionSortPurch(); // сортираме масива от закупени места
 	int seat = ((res.getRow() - 1) * res.getHall().getSeats()) + res.getSeat(); // изчисляваме поредното място
 	bool isSold = binarySearchPurch(seat); // връща дали мястото е продадено
@@ -361,7 +379,7 @@ void Event::addPurchase(Reservation& res)
 		int indexOfSeat = findReservation(seat);
 		if (indexOfSeat != -1) // мястото е било резервирано
 		{
-			std::cout << "Enter password:" << std::endl;
+			std::cout << "Enter password for reservation:" << std::endl;
 			char pass[128];
 			std::cin >> pass; // въвежда се парола
 			if (reservedPass[indexOfSeat]==pass) // паролата е вярна
