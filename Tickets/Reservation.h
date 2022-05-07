@@ -1,4 +1,4 @@
-#ifndef RESERVATION_H
+ifndef RESERVATION_H
 #define RESERVATION_H
 #include <iostream>
 #include "Hall.h"
