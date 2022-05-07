@@ -1,6 +1,7 @@
 #ifndef DATE_H
 #define DATE_H
 #pragma warning (disable: 4996)
+#include <exception>
 
 // Клас Дата
 class Date
@@ -35,6 +36,8 @@ public:
 
 	// Функция, която проверява дали датата е зададена чрез "ALL"
 	bool allDates() const;
+	// Функция която проверява дали дата е между други две дати
+    bool isBetweenDates(const Date&, const Date&);
 	// Функция за извеждане
 	void printDate() const;
 };
