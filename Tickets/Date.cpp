@@ -1,6 +1,6 @@
 #include "Date.h"
 #include <iostream>
-#pragma warning (disable:4996)
+
 // Конструктор по подразбиране
 
 Date::Date()
@@ -41,8 +41,7 @@ void Date::setDay(int newDay)
 {
 	if (newDay <= 0 || newDay > maxDays[month - 1])
 	{
-		day = 1;
-		//std::cout << "Invalid day!" << std::endl;
+		throw std::logic_error("Inavalid day!");
 	}
 	else
 	{
@@ -54,8 +53,7 @@ void Date::setMonth(int newMonth)
 {
 	if (newMonth <= 0 || newMonth > 12)
 	{
-		month = 1;
-		//std::cout << "Invalid month!"<<std::endl;
+		throw std::logic_error("Inavalid month!");
 	}
 	else
 	{
@@ -67,8 +65,7 @@ void Date::setYear(int newYear)
 {
 	if (newYear <= 0)
 	{
-		year = 1;
-		//std::cout << "Invalid year!" << std::endl;
+		throw std::logic_error("Inavalid year!");
 	}
 	else
 	{
@@ -91,6 +88,16 @@ int Date::getMonth() const
 int Date::getYear() const
 {
 	return year;
+}
+
+// Функция която проверява дали дата е между други две дати
+
+bool Date::isBetweenDates(const Date& firstDate, const Date& secondDate)
+{
+	return ((year >= firstDate.getYear() && year <= secondDate.getYear() && month > firstDate.getMonth() && month < secondDate.getMonth())
+		|| (year >= firstDate.getYear() && year <= secondDate.getYear() && month == firstDate.getMonth() && month < secondDate.getMonth() && day >= firstDate.getDay())
+		|| (year >= firstDate.getYear() && year <= secondDate.getYear() && month > firstDate.getMonth() && month == secondDate.getMonth() && day <= secondDate.getDay())
+		|| (year >= firstDate.getYear() && year <= secondDate.getYear() && month == firstDate.getMonth() && month == secondDate.getMonth() && day >= firstDate.getDay() && day <= secondDate.getDay()));
 }
 
 // Функция, която проверява дали датата е зададена чрез "ALL"
