@@ -198,7 +198,7 @@ void TimeTable::buyTicket(const Date& date, const char* name, Reservation& res)
 
 void TimeTable::reportReservedTickets(const Date& date, const char* name, const char* fileName)
 {
-	std::ofstream stream(fileName);
+	std::ofstream stream(fileName, std::ios::out | std::ios::trunc);
 	if (!stream.is_open())
 	{
 		std::cout << "Error!" << std::endl;
@@ -208,9 +208,9 @@ void TimeTable::reportReservedTickets(const Date& date, const char* name, const 
 	{
 		for (int i = 0; i < size; i++)
 		{
-			std::cout << "Reserved seats for event " << '"' << list[i].getName() << '"' << " on date:";
+			std::cout << "Reserved seats for event " << '"' << list[i].getName() << '"' << " on date ";
 			list[i].getDate().printDate();
-			stream<< "Reserved seats for event " << '"' << list[i].getName() << '"' << " on date:" << list[i].getDate().getDay() << '.' << list[i].getDate().getMonth() << '.' << list[i].getDate().getYear()<<std::endl; // file
+			stream<< "Reserved seats for event " << '"' << list[i].getName() << '"' << " on date " << list[i].getDate().getDay() << '.' << list[i].getDate().getMonth() << '.' << list[i].getDate().getYear()<<std::endl; // file
 			list[i].printReportReservedConsole();
 			list[i].printReportReserved(stream); // file
 		}
@@ -242,7 +242,7 @@ void TimeTable::reportReservedTickets(const Date& date, const char* name, const 
 				std::cout << "Reserved seats for event " << '"' << name << '"' << " on date:"; 
 				date.printDate();
 				list[i].printReportReservedConsole();
-				stream<< "Reserved seats for event " << '"' << name << '"' << " on date : "<< list[i].getName() << '"' << " on date:" << list[i].getDate().getDay() << '.' << list[i].getDate().getMonth() << '.' << list[i].getDate().getYear() << std::endl; // file
+				stream<< "Reserved seats for event " << '"' << name << '"' << " on date "<< list[i].getDate().getDay() << '.' << list[i].getDate().getMonth() << '.' << list[i].getDate().getYear() << std::endl; // file
 				list[i].printReportReserved(stream); // file
 			}
 		}
@@ -256,3 +256,21 @@ void TimeTable::reportReservedTickets(const Date& date, const char* name, const 
 
 	stream.close();
 }
+
+// Справка за закупени места в даден период за определена зала ( извеждат се представленията и броя закупени места )
+
+void TimeTable::reportPurchasedTickets(const Date& firstDate, const Date& secondDate, const Hall& hall)
+{
+	for (int i = 0; i < size; i++)
+	{
+		if (hall.allHalls() && list[i].getDate().isBetweenDates(firstDate, secondDate))
+		{
+			std::cout << "Purchased seats for event " << '"' << list[i].getName() << '"' << ": " << list[i].getPurchasedSize() << std::endl;
+		}
+		if (list[i].getHall().getNumber() == hall.getNumber() && list[i].getDate().isBetweenDates(firstDate, secondDate))
+		{
+			std::cout << "Purchased seats for event " << '"' << list[i].getName() << '"' << "in hall number "<< hall.getNumber()<< ": " << list[i].getPurchasedSize()<<std::endl;
+		}
+	}
+}
+
