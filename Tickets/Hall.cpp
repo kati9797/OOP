@@ -7,6 +7,7 @@ Hall::Hall()
 	number = 0;
 	rows = 0;
 	seats = 0;
+	strcpy(hall, "\0");
 
 	allSeats = 0;
 }
@@ -18,8 +19,24 @@ Hall::Hall(int num, int rows, int seats)
 	setNumber(num);
 	setRows(rows);
 	setSeats(seats);
+	strcpy(hall, "\0");
 
 	allSeats = rows * seats;
+}
+
+// Конструктор с параметър char*
+// Променяме допълнителната член-данна hall само ако като параметър се подаде "ALL"
+
+Hall::Hall(const char* newHall)
+{
+	number = 0;
+	rows = 0;
+	seats = 0;
+	allSeats = 0;
+	strcpy(hall, "\0");
+
+	if (strcmp(newHall, "ALL") == 0)
+		strcpy(hall, newHall);
 }
 
 // Мутатори
@@ -80,6 +97,13 @@ int Hall::getSeats() const
 int Hall::getAllSeats() const
 {
 	return allSeats;
+}
+
+// Функция, която проверява дали залата е зададена чрез "ALL"
+
+bool Hall::allHalls() const
+{
+	return (strcmp(hall, "ALL") == 0);
 }
 
 // Функция за извеждане
