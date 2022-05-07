@@ -14,7 +14,7 @@ private:
 	// Дата
 	Date date;
 	// Име на представление
-	char* name;
+	char* name = nullptr;
 	// Допълнителна променлива за дължината на името ( понеже то е с произволна дължина )
 	int nameSize;
 	// Зала
@@ -75,6 +75,7 @@ public:
 	Date getDate() const;
 	char* getName() const;
 	Hall getHall() const;
+	int getPurchasedSize() const;
 	// Функция за извеждане на представление
 	void printEvent() const;
 
