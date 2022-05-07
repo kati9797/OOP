@@ -34,9 +34,9 @@ public:
 
 	// Мутатор
 	void setList(const Event*, int);
+
 	// Функция за извеждане на разписание
 	void printTimeTable() const;
-
 	// Добавяне на събитие
 	void addEvent(const Event&);
 	// Свободни места в залата за представление ( по подадена дата и име на представлението ) 
@@ -49,5 +49,7 @@ public:
 	void buyTicket(const Date&, const char*, Reservation&);
 	// Справка за запазените, но неплатени места
 	void reportReservedTickets(const Date&, const char*, const char*);
+	// Справка за закупени места в даден период за определена зала ( извеждат се представленията и броя закупени места )
+	void reportPurchasedTickets(const Date&, const Date&, const Hall&);
 };
 #endif
