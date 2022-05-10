@@ -15,9 +15,9 @@ Date::Date()
 
 Date::Date(int newDay, int newMonth, int newYear)
 {
+	setYear(newYear);
 	setMonth(newMonth);
 	setDay(newDay);
-	setYear(newYear);
 	strcpy(date, "\0");
 }
 
@@ -39,7 +39,7 @@ Date::Date(const char* newDate)
 
 void Date::setDay(int newDay)
 {
-	if (newDay <= 0 || newDay > maxDays[month - 1])
+	if (newDay <= 0 || newDay > maxDays[month - 1] ||  (month == 2 && newDay == 29 && !isLeapYear()))
 	{
 		throw std::logic_error("Inavalid day!");
 	}
@@ -67,6 +67,11 @@ void Date::setYear(int newYear)
 	{
 		throw std::logic_error("Inavalid year!");
 	}
+	else if (isLeapYear())
+	{
+		maxDays[1] = 29;
+		year = newYear;
+	}
 	else
 	{
 		year = newYear;
@@ -92,7 +97,7 @@ int Date::getYear() const
 
 // Функция която проверява дали дата е между други две дати
 
-bool Date::isBetweenDates(const Date& firstDate, const Date& secondDate)
+bool Date::isBetweenDates(const Date& firstDate, const Date& secondDate) const
 {
 	return ((year >= firstDate.getYear() && year <= secondDate.getYear() && month > firstDate.getMonth() && month < secondDate.getMonth())
 		|| (year >= firstDate.getYear() && year <= secondDate.getYear() && month == firstDate.getMonth() && month < secondDate.getMonth() && day >= firstDate.getDay())
@@ -119,6 +124,13 @@ void Date::printDate() const
 	{
 		std::cout << "ALL";
 	}
+}
+
+// Функция, която проверява дали годината е високосна 
+
+bool Date::isLeapYear() const
+{
+	return ((year % 4 == 0) && (year % 100 != 0)) || (year % 400 == 0);
 }
 
 // Оператор "==" за сравнение на дати
