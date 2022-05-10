@@ -308,14 +308,23 @@ void Event::printEvent() const
 
 void Event::addReservation(const Reservation& reservation)
 {
-	if (reservedSize == capacity)
-	{
-		resize();
-	}
 	int seat = ((reservation.getRow() - 1) * reservation.getHall().getSeats()) + reservation.getSeat(); //изчисляване на номера на мястото 
-	reservedSeats[reservedSize] = seat;
-	reservedPass[reservedSize] = reservation.getPass();
-	reservedSize++;
+	selectionSort();
+	selectionSortPurch();
+	if (findReservation(seat) != -1 || binarySearchPurch(seat))
+	{
+		std::cout << "Can't add reservation!" << std::endl;
+	}
+	else
+	{
+		if (reservedSize == capacity)
+		{
+			resize();
+		}
+		reservedSeats[reservedSize] = seat;
+		reservedPass[reservedSize] = reservation.getPass();
+		reservedSize++;
+	}
 }
 
 // Премахване на резервирано място и паролата за съответното място
@@ -406,14 +415,14 @@ void Event::addPurchase(Reservation& res)
 
 // Брой свободни места за събитие
 
-int Event::freeSeatsForEvent()
+int Event::freeSeatsForEvent() const
 {
 	return getHall().getAllSeats() - reservedSize - purchasedSize;
 }
 
 // Отпечатва резервираните места (файл)
 
-void Event::printReportReserved(std::ofstream& stream)
+void Event::printReportReserved(std::ofstream& stream) const
 {
 	if (reservedSize == 0)
 	{
@@ -431,7 +440,7 @@ void Event::printReportReserved(std::ofstream& stream)
 
 // Отпечатва резервирани места (конзола)
 
-void Event::printReportReservedConsole()
+void Event::printReportReservedConsole() const
 {
 	if (reservedSize == 0)
 	{
@@ -447,13 +456,22 @@ void Event::printReportReservedConsole()
 	}
 }
 
-// Функция за извеждане на масива от резервирани места за представлението
+// Отпечатва закупените места (файл)
 
-void Event::printReservedSeats() const
+void Event::printPurchasedSeats(std::ofstream& stream) const
 {
-	for (int i = 0; i < reservedSize; i++)
+	if (purchasedSize == 0)
 	{
-		std::cout << reservedSeats[i] << " ";
-		std::cout << reservedPass[i].getString() << std::endl;
+		stream << '-' << std::endl;
+	}
+	else
+	{
+		for (int i = 0; i < purchasedSize; i++)
+		{
+			stream << purchasedSeats[i] << " ";
+		}
+		stream << std::endl;
 	}
 }
+
+
