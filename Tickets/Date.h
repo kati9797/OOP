@@ -16,7 +16,7 @@ private:
 
 	// Масив, пазещ максималния брой дни за всеки месец от годината
 	int maxDays[12] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
-
+	
 public:
 
 	// Конструктори
@@ -34,15 +34,15 @@ public:
 	int getMonth() const;
 	int getYear() const;
 
+	// Функция, която проверява дали годината е високосна 
+	bool isLeapYear() const;
 	// Функция, която проверява дали датата е зададена чрез "ALL"
 	bool allDates() const;
 	// Функция която проверява дали дата е между други две дати
-    bool isBetweenDates(const Date&, const Date&);
+        bool isBetweenDates(const Date&, const Date&) const;
 	// Функция за извеждане
 	void printDate() const;
 };
 
 // Оператор за сравнение на дати
 bool operator==(const Date&, const Date&);
-
-#endif
