@@ -19,7 +19,7 @@ private:
 	// Парола за резервация 
 	MyString password;
 	// Бележка към резервацията 
-	char note[1024];
+	MyString note;
 
 public:
 
@@ -30,14 +30,14 @@ public:
 
 	// Мутатори
 	void setPass(const MyString&);
-	void setNote(char*);
+	void setNote(const MyString&);
 	void setHall(const Hall&);
 
 	// Селектори
 	const MyString& getPass() const;
 	int getRow() const;
 	int getSeat() const;
-	const char* getNote() const;
+	const MyString& getNote() const;
 	const Hall& getHall() const;
 
 	// Функция за извеждане на резервация
