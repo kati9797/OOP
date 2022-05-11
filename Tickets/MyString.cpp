@@ -1,5 +1,4 @@
 #include "MyString.h"
-#pragma warning(disable : 4996)
 
 // Копираща функция
 
@@ -65,7 +64,7 @@ MyString::~MyString()
 
 // Селектори
 
-int MyString::getSize()
+int MyString::getSize() const
 {
 	return size;
 }
@@ -85,6 +84,14 @@ void MyString::concat(const MyString& other)
 	free();
 	string = newString;
 	size = size + other.size;
+}
+
+// Оператор за извеждане
+
+std::ostream& operator<<(std::ostream& stream, const MyString& str)
+{
+	stream << str.getString();
+	return stream;
 }
 
 // Оператори за сравнение
