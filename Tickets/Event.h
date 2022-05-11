@@ -14,9 +14,7 @@ private:
 	// Дата
 	Date date;
 	// Име на представление
-	char* name = nullptr;
-	// Допълнителна променлива за дължината на името ( понеже то е с произволна дължина )
-	int nameSize;
+	MyString name;
 	// Зала
 	Hall hall;
 
@@ -24,7 +22,7 @@ private:
 	int* reservedSeats;
 	// Масив от пароли за резервираните места
 	MyString* reservedPass;
-	// Дължина на масива от резервирани места
+	// Дължина на масива от резервирани места ( дължина на мсива от пароли )
 	int reservedSize;
 	// Капацитет на масива от резервирани места ( понеже ще се наложи да добавяме/да премахваме елементи от масива )
 	int capacity;
@@ -62,7 +60,7 @@ public:
 
 	// Конструктори
 	Event();
-	Event(Date, const char*, Hall);
+	Event(const Date&, const MyString&, const Hall&);
 	Event(const Event&);
 	// Оператор за присвояване 
 	Event& operator=(const Event&);
@@ -70,11 +68,11 @@ public:
 	~Event();
 
 	// Мутатор за името на представлението
-	void setName(const char*);
+	void setName(const MyString&);
 	// Селектори
-	Date getDate() const;
-	char* getName() const;
-	Hall getHall() const;
+	const Date& getDate() const;
+	const MyString& getName() const;
+	const Hall& getHall() const;
 	int getPurchasedSize() const;
 	// Функция за извеждане на представление
 	void printEvent() const;
@@ -88,12 +86,12 @@ public:
 	// Проверява дали продаждабата на дадено място може да се осъществи ( ако е възможно -> покупката се осъществява )
 	void addPurchase(Reservation&);
 	// Брой свободни места за събитие
-	int freeSeatsForEvent();
+	int freeSeatsForEvent() const;
 	// Отпечатва резервираните места (файл)
-	void printReportReserved(std::ofstream&);
+	void printReportReserved(std::ofstream&) const;
 	// Отпечатва резервирани места (конзола)
-	void printReportReservedConsole();
-	// Помощна функция, която извежда масива от резервирани места
-	void printReservedSeats() const;
+	void printReportReservedConsole() const;
+	// Отпечатва закупените места (файл)
+	void printPurchasedSeats(std::ofstream&) const;
 };
 #endif 
