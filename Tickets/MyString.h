@@ -1,6 +1,7 @@
 #include <iostream>
 #ifndef MYSTRING_HEADER
 #define MYSTRING_HEADER
+#pragma warning(disable : 4996)
 
 // Клас Стринг
 // Предварително имплементиран за задачата Word Collection
@@ -29,11 +30,13 @@ public:
 	~MyString();
 
 	// Селектори
-	int getSize();
+	int getSize() const;
 	char* getString() const;
 
 	// Конкатенираща функция
 	void concat(const MyString&);
+	// Оператор за извеждане
+	friend std::ostream& operator<<(std::ostream&, const MyString&);
 };
 
 // Оператори за сравнение
@@ -42,3 +45,4 @@ bool operator <(const MyString&, const MyString&);
 bool operator ==(const MyString&, const MyString&);
 
 #endif 
+
