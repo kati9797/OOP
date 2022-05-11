@@ -6,9 +6,7 @@ void Event::copyFrom(const Event& other)
 {
 	date = other.date;
 	hall = other.hall;
-	nameSize = other.nameSize;
-	name = new char[nameSize + 1];
-	strcpy(name, other.name);
+	name = other.name;
 
 	reservedSize = other.reservedSize;
 	capacity = other.capacity;
@@ -33,7 +31,6 @@ void Event::copyFrom(const Event& other)
 
 void Event::free()
 {
-	delete[] name;
 	delete[] reservedSeats;
 	delete[] reservedPass;
 	delete[] purchasedSeats;
@@ -198,10 +195,7 @@ bool Event::binarySearchPurch(int seat)
 Event::Event()
 {
 	date = Date();
-	char defName[] = "Unknown";
-	nameSize = strlen(defName);
-	name = new char[nameSize + 1];
-	strcpy(name, defName);
+	name = "Unknown";
 	hall = Hall();
 
 	reservedSize = 0;
@@ -216,7 +210,7 @@ Event::Event()
 
 // Конструктор с параметри
 
-Event::Event(Date newDate, const char* newName, Hall newHall)
+Event::Event(const Date& newDate, const MyString& newName, const Hall& newHall)
 {
 	date = newDate;
 	setName(newName);
@@ -260,31 +254,24 @@ Event::~Event()
 
 // Мутатор за име
 
-void Event::setName(const char* newName)
+void Event::setName(const MyString& newName)
 {
-	if (name != nullptr)
-	{
-		delete[] name;
-	}
-
-	nameSize = strlen(newName);
-	name = new char[nameSize + 1];
-	strcpy(name, newName);
+	name = newName;
 }
 
 // Селектори
 
-Date Event::getDate() const
+const Date& Event::getDate() const
 {
 	return date;
 }
 
-char* Event::getName() const
+const MyString& Event::getName() const
 {
 	return name;
 }
 
-Hall Event::getHall() const
+const Hall& Event::getHall() const
 {
 	return hall;
 }
@@ -473,5 +460,3 @@ void Event::printPurchasedSeats(std::ofstream& stream) const
 		stream << std::endl;
 	}
 }
-
-
