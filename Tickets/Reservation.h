@@ -1,4 +1,4 @@
-ifndef RESERVATION_H
+#ifndef RESERVATION_H
 #define RESERVATION_H
 #include <iostream>
 #include "Hall.h"
@@ -18,8 +18,6 @@ private:
 	int seat;
 	// Парола за резервация 
 	MyString password;
-	// Дължина на паролата
-	int sizePass;
 	// Бележка към резервацията 
 	char note[1024];
 
@@ -27,7 +25,7 @@ public:
 
 	// Конструктори
 	Reservation();
-	Reservation(int, int, MyString);
+	Reservation(int, int, const MyString&);
 	Reservation(int, int);
 
 	// Мутатори
@@ -36,10 +34,11 @@ public:
 	void setHall(const Hall&);
 
 	// Селектори
-	MyString getPass() const;
+	const MyString& getPass() const;
 	int getRow() const;
 	int getSeat() const;
-	Hall getHall() const;
+	const char* getNote() const;
+	const Hall& getHall() const;
 
 	// Функция за извеждане на резервация
 	void printReservation() const;
