@@ -129,12 +129,12 @@ void TimeTable::addEvent(const Event& ev)
 // Функция, която връща броя на свободните места за дадено представление ( по подадена дата и име на представлението )
 // Ако не е намерено такова представление в разписанието -> връща, че няма свободни места
 
-int TimeTable::freeSeats(const Date& date, const char* name)
+int TimeTable::freeSeats(const Date& date, const MyString& name) const
 {
 
 	for (int i = 0; i < size; i++)
 	{
-		if (list[i].getDate() == date && strcmp(list[i].getName(), name) == 0)
+		if (list[i].getDate() == date && list[i].getName() == name)
 		{
 			return list[i].freeSeatsForEvent();
 		}
@@ -145,11 +145,11 @@ int TimeTable::freeSeats(const Date& date, const char* name)
 // Запазване на билет за представление по подадени дата, име на представление и данни за резервацията
 // Ако в разписанито не е намерено такова представление, не правим нищо
 
-void TimeTable::saveTicket(const Date& date, const char* name, Reservation& res)
+void TimeTable::saveTicket(const Date& date, const MyString& name, Reservation& res)
 {
 	for (int i = 0; i < size; i++)
 	{
-		if (list[i].getDate() == date && strcmp(list[i].getName(), name) == 0)
+		if (list[i].getDate() == date && list[i].getName() == name)
 		{
 			res.setHall(list[i].getHall());
 			list[i].addReservation(res);
@@ -161,11 +161,11 @@ void TimeTable::saveTicket(const Date& date, const char* name, Reservation& res)
 // Отмяна на резервация за представление по подадени дата, име на представление и данни за резервацията
 // Ако в разписанито не е намерено такова представление, не правим нищо
 
-void TimeTable::removeSavedTicket(const Date& date, const char* name, Reservation& res)
+void TimeTable::removeSavedTicket(const Date& date, const MyString& name, const Reservation& res)
 {
 	for (int i = 0; i < size; i++)
 	{
-		if (list[i].getDate() == date && strcmp(list[i].getName(), name) == 0)
+		if (list[i].getDate() == date && list[i].getName() == name)
 		{
 			list[i].removeReservation(res);
 		}
@@ -175,12 +175,12 @@ void TimeTable::removeSavedTicket(const Date& date, const char* name, Reservatio
 
 // Закупуване на билет за представление
 
-void TimeTable::buyTicket(const Date& date, const char* name, Reservation& res)
+void TimeTable::buyTicket(const Date& date, const MyString& name, Reservation& res)
 {
 	bool foundEvent = false;
 	for (int i = 0; i < size; i++)
 	{
-		if (list[i].getDate() == date && strcmp(list[i].getName(), name) == 0) // събитието е намерено
+		if (list[i].getDate() == date && list[i].getName() == name) // събитието е намерено
 		{
 			res.setHall(list[i].getHall());
 			list[i].addPurchase(res);
@@ -196,7 +196,7 @@ void TimeTable::buyTicket(const Date& date, const char* name, Reservation& res)
 
 // Справка за запазените, но неплатени места
 
-void TimeTable::reportReservedTickets(const Date& date, const char* name, const char* fileName)
+void TimeTable::reportReservedTickets(const Date& date, const MyString& name, const char* fileName) const
 {
 	std::ofstream stream(fileName, std::ios::out | std::ios::trunc);
 	if (!stream.is_open())
@@ -236,7 +236,7 @@ void TimeTable::reportReservedTickets(const Date& date, const char* name, const 
 		bool foundEvent = false;
 		for (int i = 0; i < size; i++)
 		{
-			if (list[i].getDate() == date && strcmp(list[i].getName(), name) == 0)
+			if (list[i].getDate() == date && list[i].getName() == name)
 			{
 				foundEvent = true;
 				std::cout << "Reserved seats for event " << '"' << name << '"' << " on date:"; 
@@ -259,7 +259,7 @@ void TimeTable::reportReservedTickets(const Date& date, const char* name, const 
 
 // Справка за закупени места в даден период за определена зала ( извеждат се представленията и броя закупени места )
 
-void TimeTable::reportPurchasedTickets(const Date& firstDate, const Date& secondDate, const Hall& hall)
+void TimeTable::reportPurchasedTickets(const Date& firstDate, const Date& secondDate, const Hall& hall) const
 {
 	for (int i = 0; i < size; i++)
 	{
@@ -269,8 +269,31 @@ void TimeTable::reportPurchasedTickets(const Date& firstDate, const Date& second
 		}
 		if (list[i].getHall().getNumber() == hall.getNumber() && list[i].getDate().isBetweenDates(firstDate, secondDate))
 		{
-			std::cout << "Purchased seats for event " << '"' << list[i].getName() << '"' << "in hall number "<< hall.getNumber()<< ": " << list[i].getPurchasedSize()<<std::endl;
+			std::cout << "Purchased seats for event " << '"' << list[i].getName() << '"' << " in hall number "<< hall.getNumber()<< ": " << list[i].getPurchasedSize()<<std::endl;
 		}
 	}
 }
 
+// Записва информацията за представленията в текстов файл
+
+void TimeTable::saveToFile(const char* fileName) const
+{
+	std::ofstream stream(fileName, std::ios::out | std::ios::trunc);
+	stream << "Timetable:" << std::endl;
+	stream << std::endl;
+
+	for (int i = 0; i < size; i++)
+	{
+		stream << "Event: " << list[i].getName() << std::endl;
+		stream << "Date: " << list[i].getDate().getDay() << '.' << list[i].getDate().getMonth() << '.' << list[i].getDate().getYear() << std::endl;
+		stream << "Hall № " << list[i].getHall().getNumber() << std::endl;
+		stream << "All seats: " << list[i].getHall().getAllSeats() << std::endl;
+		stream << "Free seats: " << freeSeats(list[i].getDate(), list[i].getName()) << std::endl;
+		stream << "List of reserved seats: " << std::endl;
+		list[i].printReportReserved(stream);
+		stream << "List of purchased seats: " << std::endl;
+		list[i].printPurchasedSeats(stream);
+		stream << std::endl;
+	}
+	stream.close();
+}
