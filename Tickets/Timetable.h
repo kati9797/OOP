@@ -1,4 +1,4 @@
-#ifndef TIMETABLE_H
+ifndef TIMETABLE_H
 #define TIMETABLE_H
 #include "Event.h"
 
@@ -40,16 +40,18 @@ public:
 	// Добавяне на събитие
 	void addEvent(const Event&);
 	// Свободни места в залата за представление ( по подадена дата и име на представлението ) 
-	int freeSeats(const Date&, const char*);
+	int freeSeats(const Date&, const MyString&) const;
 	// Запазване на билет за представление ( по подадена дата, име на представлението и данни за резервация )
-	void saveTicket(const Date&, const char*, Reservation&);
+	void saveTicket(const Date&, const MyString&, Reservation&);
 	// Отмяна на резервация ( по подадена дата, име на представлението и данни за резервация)
-	void removeSavedTicket(const Date&, const char*, Reservation&);
+	void removeSavedTicket(const Date&, const MyString&, const Reservation&);
 	// Закупуване на билет за представление
-	void buyTicket(const Date&, const char*, Reservation&);
+	void buyTicket(const Date&, const MyString&, Reservation&);
 	// Справка за запазените, но неплатени места
-	void reportReservedTickets(const Date&, const char*, const char*);
+	void reportReservedTickets(const Date&, const MyString&, const char*) const;
 	// Справка за закупени места в даден период за определена зала ( извеждат се представленията и броя закупени места )
-	void reportPurchasedTickets(const Date&, const Date&, const Hall&);
+	void reportPurchasedTickets(const Date&, const Date&, const Hall&) const;
+	// Записва информацията за представленията в текстов файл
+	void saveToFile(const char*) const;
+		
 };
-#endif
