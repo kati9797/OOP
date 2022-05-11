@@ -7,12 +7,12 @@ Reservation::Reservation()
 	hall = Hall();
 	row = 0;
 	seat = 0;
-	password = MyString();
+	password = "Unknown";
 }
 
 // Конструктор с параметри
 
-Reservation::Reservation(int newRow, int newSeat, const MyString pass)
+Reservation::Reservation(int newRow, int newSeat, const MyString& pass)
 {
 	hall = Hall();
 	row = newRow;
@@ -21,13 +21,14 @@ Reservation::Reservation(int newRow, int newSeat, const MyString pass)
 }
 
 // Конструктор с два параметъра ( ред и място )
+// Резервация, която ще бъде закупена
 
 Reservation::Reservation(int newRow, int newSeat)
 {
 	hall = Hall();
 	row = newRow;
 	seat = newSeat;
-	password = MyString();
+	password = "No password";
 }
 
 // Мутатори
@@ -37,9 +38,9 @@ void Reservation::setPass(const MyString& pass)
 	password = pass;
 }
 
-void Reservation::setNote(char* newNote)
+void Reservation::setNote(const MyString& newNote)
 {
-	strcpy(note, newNote);
+	note = newNote;
 }
 
 void Reservation::setHall(const Hall& newHall)
@@ -49,7 +50,7 @@ void Reservation::setHall(const Hall& newHall)
 
 // Селектори
 
-MyString Reservation::getPass() const
+const MyString& Reservation::getPass() const
 {
 	return password;
 }
@@ -64,7 +65,12 @@ int Reservation::getSeat() const
 	return seat;
 }
 
-Hall Reservation::getHall() const
+const MyString& Reservation::getNote() const
+{
+	return note;
+}
+
+const Hall& Reservation::getHall() const
 {
 	return hall;
 }
@@ -73,5 +79,5 @@ Hall Reservation::getHall() const
 
 void Reservation::printReservation() const
 {
-	std::cout << row << " " << seat << " " << password.getString() << std::endl;
+	std::cout << row << " " << seat << " " << password << std::endl;
 }
