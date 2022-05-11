@@ -4,6 +4,8 @@
 #include <exception>
 
 // Клас Дата
+// Показван на упражнения 
+
 class Date
 {
 private:
