@@ -94,6 +94,16 @@ std::ostream& operator<<(std::ostream& stream, const MyString& str)
 	return stream;
 }
 
+// Оператор за четене 
+
+std::istream& operator>>(std::istream& stream, MyString& str)
+{
+	char toRead[1024];
+	stream >> toRead;
+	str = MyString(toRead);
+	return stream;
+}
+
 // Оператори за сравнение
 
 bool operator>(const MyString& str1, const MyString& str2)
