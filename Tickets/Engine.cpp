@@ -2,22 +2,22 @@
 
 void Engine::addInList(const Hall& hall)
 {
-		// Подава се дата и име на представлението
+	// Подава се дата и име на представлението
 
-	    std::cout << "Adding new event" << std::endl;
-		int day, month, year;
-		std::cout << "Enter date: (day-month-year)" << std::endl;
-		std::cin >> day;
-		std::cin >> month;
-		std::cin >> year;
-		Date date(day, month, year);
+	std::cout << "Adding new event" << std::endl;
+ 	int day, month, year;
+	std::cout << "Enter date: (day-month-year)" << std::endl;
+	std::cin >> day;
+	std::cin >> month;
+	std::cin >> year;
+	Date date(day, month, year);
 
-		MyString name;
-		std::cout << "Enter name of event: ";
-		std::cin >> name;
+	MyString name;
+	std::cout << "Enter name of event: ";
+	std::cin >> name;
 		
-		Event event(date, name, hall);
-		list.addEvent(event);
+	Event event(date, name, hall);
+	list.addEvent(event);
 }
 
 void Engine::save()
@@ -169,7 +169,7 @@ Engine::Engine()
 void Engine::run()
 {
 	// Залите са предварително зададени
-    // номер - редове - места (на ред)
+    	// номер - редове - места (на ред)
 	Hall h1(8, 12, 7);
 	Hall h2(6, 11, 9);
 	Hall h3(9, 10, 15);
