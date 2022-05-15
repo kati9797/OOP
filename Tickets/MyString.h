@@ -4,7 +4,8 @@
 #pragma warning(disable : 4996)
 
 // Клас Стринг
-// Предварително имплементиран за задачата Word Collection
+// Показван на упражнения
+// https://github.com/Angeld55/Object-oriented_programming_FMI/tree/master/Sem.%2007/MyStringon
 
 class MyString
 {
@@ -37,6 +38,8 @@ public:
 	void concat(const MyString&);
 	// Оператор за извеждане
 	friend std::ostream& operator<<(std::ostream&, const MyString&);
+	// Оператор за четене
+	friend std::istream& operator>>(std::istream&, MyString&);
 };
 
 // Оператори за сравнение
