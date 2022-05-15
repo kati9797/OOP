@@ -295,22 +295,29 @@ void Event::printEvent() const
 
 void Event::addReservation(const Reservation& reservation)
 {
-	int seat = ((reservation.getRow() - 1) * reservation.getHall().getSeats()) + reservation.getSeat(); //изчисляване на номера на мястото 
-	selectionSort();
-	selectionSortPurch();
-	if (findReservation(seat) != -1 || binarySearchPurch(seat))
+	if (reservation.getRow() <= reservation.getHall().getRows() && reservation.getSeat() <= reservation.getHall().getSeats())
 	{
-		std::cout << "Can't add reservation!" << std::endl;
+		int seat = ((reservation.getRow() - 1) * reservation.getHall().getSeats()) + reservation.getSeat(); //изчисляване на номера на мястото 
+		selectionSort();
+		selectionSortPurch();
+		if (findReservation(seat) != -1 || binarySearchPurch(seat))
+		{
+			std::cout << "Can't add reservation!" << std::endl;
+		}
+		else
+		{
+			if (reservedSize == capacity)
+			{
+				resize();
+			}
+			reservedSeats[reservedSize] = seat;
+			reservedPass[reservedSize] = reservation.getPass();
+			reservedSize++;
+		}
 	}
 	else
 	{
-		if (reservedSize == capacity)
-		{
-			resize();
-		}
-		reservedSeats[reservedSize] = seat;
-		reservedPass[reservedSize] = reservation.getPass();
-		reservedSize++;
+		std::cout << "Invalid reservation!" << std::endl;
 	}
 }
 
@@ -361,43 +368,51 @@ void Event::pushInPurchasedArr(int seat)
 
 void Event::addPurchase(Reservation& res)
 {
-	selectionSort();
-	selectionSortPurch(); // сортираме масива от закупени места
-	int seat = ((res.getRow() - 1) * res.getHall().getSeats()) + res.getSeat(); // изчисляваме поредното място
-	bool isSold = binarySearchPurch(seat); // връща дали мястото е продадено
+	if (res.getRow() <= res.getHall().getRows() && res.getSeat() <= res.getHall().getSeats())
+	{
+		selectionSort();
+		selectionSortPurch(); // сортираме масива от закупени места
+		int seat = ((res.getRow() - 1) * res.getHall().getSeats()) + res.getSeat(); // изчисляваме поредното място
+		bool isSold = binarySearchPurch(seat); // връща дали мястото е продадено
 
-	if (isSold == true)
-	{
-		std::cout << "This seat has been already sold!" << std::endl;
-	}
-	else
-	{
-		int indexOfSeat = findReservation(seat);
-		if (indexOfSeat != -1) // мястото е било резервирано
+		if (isSold == true)
 		{
-			std::cout << "Enter password for reservation:" << std::endl;
-			char pass[128];
-			std::cin >> pass; // въвежда се парола
-			if (reservedPass[indexOfSeat]==pass) // паролата е вярна
+			std::cout << "This seat has been already sold!" << std::endl;
+		}
+		else
+		{
+			int indexOfSeat = findReservation(seat);
+			if (indexOfSeat != -1) // мястото е било резервирано
+			{
+				std::cout << "Enter password for reservation:" << std::endl;
+				char pass[128];
+				std::cin >> pass; // въвежда се парола
+				if (reservedPass[indexOfSeat]==pass) // паролата е вярна
 				{
 					// поставяме мястото в масива от купени места
 				    pushInPurchasedArr(seat);
 					std::cout << "Succesful purchase!" << std::endl;
 					removeReservation(res);
 				}
-			else // грешна парола, мястото не се купува
-			{
-				std::cout << "Wrong password!" << std::endl;
+				else // грешна парола, мястото не се купува
+				{
+					std::cout << "Wrong password!" << std::endl;
+				}
 			}
-		}
-		else
-		{
-			// мястото не е резервирано
-			pushInPurchasedArr(seat);
-			std::cout << "Succesful purchase!" << std::endl;
-			removeReservation(res);
+			else
+			{
+				// мястото не е резервирано
+				pushInPurchasedArr(seat);
+				std::cout << "Succesful purchase!" << std::endl;
+				removeReservation(res);
+			}	
 		}
 	}
+	else
+	{
+		std::cout << "Invalid reservation!" << std::endl;
+	}
+	
 }
 
 // Брой свободни места за събитие
