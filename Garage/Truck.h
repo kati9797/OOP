@@ -1,44 +1,21 @@
-#include "Truck.h"
+#pragma once
+#include "Minivan.h"
+const int maxSpeedTruck = 140;
+const int minSpeedTruck = 80;
 
-Truck::Truck()
+class Truck : public Vehicle
 {
-	speed = minSpeedTruck;
-}
+private:
+	int speed;
 
-Truck::Truck(const char* brand, int speed) : Vehicle(brand)
-{
-	setSpeed(speed);
-}
+public:
+	Truck();
+	Truck(const char*, int);
 
-Vehicle* Truck::clone() const
-{
-	Vehicle* newObj = new Truck(*this);
-	return newObj;
-}
+	Vehicle* clone() const override;
 
-void Truck::setSpeed(int speed)
-{
-	if (speed >= minSpeedTruck && speed <= maxSpeedTruck)
-	{
-		this->speed = speed;
-	}
-	else
-	{
-		this->speed = minSpeedTruck;
-	}
-}
-
-int Truck::getSpeed() const
-{
-	return speed;
-}
-
-int Truck::getMaxSpeed() const
-{
-	return maxSpeedTruck;
-}
-
-void Truck::print() const
-{
-	std::cout << "Truck with speed " << speed << std::endl;
-}
+	void setSpeed(int);
+	int getSpeed() const override;
+	int getMaxSpeed() const override;
+	void print() const override;
+};
