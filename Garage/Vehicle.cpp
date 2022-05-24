@@ -6,6 +6,7 @@ void Vehicle::copyFrom(const Vehicle& other)
 {
 	brand = new char[strlen(other.brand) + 1];
 	strcpy(brand, other.brand);
+	speed = other.speed;
 }
 
 void Vehicle::free()
@@ -16,12 +17,14 @@ void Vehicle::free()
 Vehicle::Vehicle()
 {
 	brand = nullptr;
+	speed = 0;
 }
 
 Vehicle::Vehicle(const char* newBrand)
 {
 	brand = new char[strlen(newBrand) + 1];
 	strcpy(brand, newBrand);
+	speed = 0;
 }
 
 Vehicle::Vehicle(const Vehicle& other)
