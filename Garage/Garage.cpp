@@ -1,67 +1,71 @@
 #include "Garage.h"
 
-unsigned Garage::size = 0;
+void Garage::copyFrom(const Garage& other)
+{
+	capacity = other.capacity;
+	size = other.size;
+	garage = new Vehicle * [capacity];
+	for (int i = 0; i < size; i++)
+	{
+		garage[i] = other.garage[i]->clone();
+	}
+}
+
+void Garage::free()
+{
+	for (int i = 0; i < size; i++)
+	{
+		delete garage[i];
+	}
+	delete[] garage;
+}
 
 Garage::Garage()
 {
-	capacity = 0;
-	cars = Vector<Car>();
-	minivans = Vector<Minivan>();
-	trucks = Vector<Truck>();
+	capacity = 4;
+	size = 0;
+	garage = new Vehicle * [capacity];
 }
 
 Garage::Garage(unsigned newCapacity)
 {
 	capacity = newCapacity;
-	cars = Vector<Car>();
-	minivans = Vector<Minivan>();
-	trucks = Vector<Truck>();
+	size = 0;
+	garage = new Vehicle*[capacity];
 }
 
-const Vector<Car>& Garage::getCars() const
+Garage::Garage(const Garage& other)
 {
-	return cars;
+	copyFrom(other);
 }
 
-const Vector<Minivan>& Garage::getVans() const
+Garage& Garage::operator=(const Garage& other)
 {
-	return minivans;
+	if (this != &other)
+	{
+		free();
+		copyFrom(other);
+	}
+	return *this;
 }
 
-const Vector<Truck>& Garage::getTrucks() const
+Garage::~Garage()
 {
-	return trucks;
+	free();
 }
 
-void Garage::pushCarInGarage(const Car& car)
+void Garage::addVechicle(const Vehicle& obj)
 {
 	if (size < capacity)
 	{
-		cars.push(car);
-		size++;
+		garage[size++] = obj.clone();
 	}
-	else throw std::logic_error("Garage is full!");
+	else 
+	{
+		throw std::logic_error("Garage is full!");
+	}
 }
 
-void Garage::pushMinivanInGarage(const Minivan& minivan)
-{
-	if (size < capacity)
-	{
-		minivans.push(minivan);
-		size++;
-	}
-	else throw std::logic_error("Garage is full!");
-}
-
-void Garage::pushTruckInGarage(const Truck& truck)
-{
-	if (size < capacity)
-	{
-		trucks.push(truck);
-		size++;
-	}
-	else throw std::logic_error("Garage is full!");
-}
 
 int Garage::posibleOrders(double highwayKm, double speedRoadKm, double thirdClassRoadKm, double hours) const
 {
@@ -71,29 +75,30 @@ int Garage::posibleOrders(double highwayKm, double speedRoadKm, double thirdClas
 		throw std::logic_error("There is no vehicles!");
 	}
 
-	for (int i = 0; i < cars.getSize(); i++)
+	for (int i = 0; i < size; i++)
 	{
-		if (highwayKm / cars[i].getSpeed() <= hours && speedRoadKm / cars[i].getSpeed() <= hours && thirdClassRoadKm / cars[i].getSpeed() <= hours)
+		if (garage[i]->getMaxSpeed() == maxSpeedCar)
 		{
-			count++;
+			if (highwayKm / garage[i]->getSpeed() <= hours && speedRoadKm / garage[i]->getSpeed() <= hours && thirdClassRoadKm / garage[i]->getSpeed() <= hours)
+			{
+				count++;
+			}
+		}
+		else if (garage[i]->getMaxSpeed() == maxSpeedVan)
+		{
+			if (highwayKm / garage[i]->getSpeed() <= hours && speedRoadKm / (garage[i]->getSpeed()/2) <= hours && thirdClassRoadKm / (garage[i]->getSpeed()/3) <= hours)
+			{
+				count++;
+			}
+		}
+		else if (garage[i]->getMaxSpeed() == maxSpeedTruck)
+		{
+			if (highwayKm / (garage[i]->getSpeed()/2) <= hours && speedRoadKm / (garage[i]->getSpeed()/4) <= hours && thirdClassRoadKm / 10 <= hours)
+			{
+				count++;
+			}
 		}
 	}
-
-	for (int i = 0; i < minivans.getSize(); i++)
-	{
-		if (highwayKm / minivans[i].getSpeed() <= hours && speedRoadKm / (minivans[i].getSpeed()/2) <= hours && thirdClassRoadKm / (minivans[i].getSpeed()/3) <= hours)
-		{
-			count++;
-		}
-	}
-
-	for (int i = 0; i < trucks.getSize(); i++)
-	{
-		if (highwayKm / (trucks[i].getSpeed()/2) <= hours && speedRoadKm / (trucks[i].getSpeed()/4) <= hours && thirdClassRoadKm / 10 <= hours)
-		{
-			count++;
-		}
-	}
-
 	return count;
 }
+
