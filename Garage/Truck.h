@@ -6,7 +6,6 @@ const int minSpeedTruck = 80;
 class Truck : public Vehicle
 {
 private:
-
 	int speed;
 
 public:
