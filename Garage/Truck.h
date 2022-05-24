@@ -9,10 +9,13 @@ private:
 	int speed;
 
 public:
-	Truck() = default;
+	Truck();
 	Truck(const char*, int);
 
+	Vehicle* clone() const override;
+
 	void setSpeed(int);
-	int getSpeed() const;
-	void print() const;
+	int getSpeed() const override;
+	int getMaxSpeed() const override;
+	void print() const override;
 };
