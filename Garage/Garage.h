@@ -1,6 +1,5 @@
 #pragma once
 #include "Vehicle.h"
-#include "Vector.hpp"
 #include "Car.h"
 #include "Minivan.h"
 #include "Truck.h"
@@ -8,21 +7,19 @@
 class Garage
 {
 private:
-	Vector<Car> cars;
-	Vector<Minivan> minivans;
-	Vector<Truck> trucks;
-
-	static unsigned size;
+	Vehicle** garage;
+	unsigned size;
 	unsigned capacity;
+
+	void copyFrom(const Garage&);
+	void free();
 public:
 	Garage();
 	Garage(unsigned);
-	const Vector<Car>& getCars() const;
-	const Vector<Minivan>& getVans() const;
-	const Vector<Truck>& getTrucks() const;
+	Garage(const Garage&);
+	Garage& operator=(const Garage&);
+	~Garage();
 
-	void pushCarInGarage(const Car&);
-	void pushMinivanInGarage(const Minivan&);
-	void pushTruckInGarage(const Truck&);
+	void addVechicle(const Vehicle&);
 	int posibleOrders(double, double, double, double) const;
 };
