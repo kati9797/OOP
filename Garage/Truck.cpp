@@ -1,8 +1,19 @@
 #include "Truck.h"
 
+Truck::Truck()
+{
+	speed = minSpeedTruck;
+}
+
 Truck::Truck(const char* brand, int speed) : Vehicle(brand)
 {
 	setSpeed(speed);
+}
+
+Vehicle* Truck::clone() const
+{
+	Vehicle* newObj = new Truck(*this);
+	return newObj;
 }
 
 void Truck::setSpeed(int speed)
@@ -20,6 +31,11 @@ void Truck::setSpeed(int speed)
 int Truck::getSpeed() const
 {
 	return speed;
+}
+
+int Truck::getMaxSpeed() const
+{
+	return maxSpeedTruck;
 }
 
 void Truck::print() const
