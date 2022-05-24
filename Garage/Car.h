@@ -6,7 +6,6 @@ const int minSpeedCar = 180;
 class Car : public Vehicle
 {
 private:
-	
 	int speed;
 
 public:
